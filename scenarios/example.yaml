@@ -1,0 +1,8 @@
+# 선택 — Day 2 Mini Build에서 채웁니다.
+# 하나의 시나리오 = 자연어 입력과 기대 판정의 쌍.
+scenario:
+  name: submit-happy-path
+  steps:
+    - input: "Submit request R-1001."
+      as: alex
+      expect: ALLOW

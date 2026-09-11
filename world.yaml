@@ -1,0 +1,58 @@
+# ─────────────────────────────────────────────
+#  Your Superwork World
+#  이 파일이 여러분의 세계 전체입니다.
+#  README.md의 STEP 1부터 순서대로 채워가세요.
+#  각 STEP 후에는 반드시:  superwork validate
+# ─────────────────────────────────────────────
+
+world:
+  id: my-world                     # STEP 1: 여러분의 도메인으로 (예: procurement-approval)
+  version: 0.1.0
+  spec: superwork.world/v1         # 언어 버전 — 수정하지 마세요
+  mission: >
+    TODO: 이 세계가 완수하려는 일을 한 문장으로.
+    (예: Process purchase requests safely from submission to delivery.)
+
+# STEP 2 — Entities: 어떤 것들이 존재해야 하는가?
+entities:
+  # 예시 — 여러분의 도메인으로 교체하세요
+  Request:
+    attributes:
+      id: string
+      amount: money
+      requester: ref(Employee)
+      status: state
+    owned_state: true              # 상태기계를 갖는 엔티티는 하나로 시작하세요
+  Employee:
+    attributes:
+      id: string
+      name: string
+      manager: ref(Employee)
+
+# STEP 3 — States: 세계가 사실로 알아야 하는 것은?
+states:
+  Request:
+    - draft
+    - submitted
+    # TODO: 여러분의 상태들
+
+terminal_states: []                # 최종 사실 (예: [closed, rejected])
+
+# STEP 4 — Transitions: 무엇이 바뀌는 것이 허용되는가?
+transitions:
+  submit:
+    from: draft
+    to: submitted
+    principal_role: employee
+    guards: [C1_requester_only]
+
+# STEP 5 — Constraints: 절대 허용되면 안 되는 것은?
+constraints:
+  C1_requester_only:
+    expr: principal.id == request.requester
+    message: Only the requester can submit.
+
+principals:
+  - id: alex
+    name: Alex
+    roles: [employee]
