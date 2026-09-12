@@ -24,7 +24,7 @@ superwork validate --summary
 
 ```bash
 # 1. 이 저장소를 clone
-git clone <your-fork-url> && cd superwork-world-starter
+git clone <your-fork-url> && cd superwork-starter
 
 # 2. 설치
 npm install
