@@ -34,7 +34,8 @@ purpose stated in this License.
 
    (a) The Licensor owns the Starter Content.
    (b) You retain ownership of your original Participant Work. Nothing in this
-       License transfers ownership of your Participant Work to the Licensor.
+       License transfers ownership of your Participant Work to the Licensor;
+       the permissions you give by submitting it are set out in Section 7.
    (c) Your ownership of your Participant Work does not grant you any right to
        use, reuse or redistribute the Starter Content — including its
        templates, documentation, examples or other Superwork-authored
@@ -87,11 +88,39 @@ purpose stated in this License.
    MIT License, and yaml under the ISC License. See the license files in
    node_modules.
 
-7. Review of your homework
+7. Submitted homework
 
-   By submitting your homework for review, you permit the Bootcamp's
-   instructors to access, import, run and discuss your Participant Work for
-   the purpose of reviewing it. This permission does not transfer ownership.
+   (a) Review license. By submitting your homework (a repository or a ZIP),
+       you grant the Licensor, and the instructors and reviewers acting on the
+       Licensor's behalf to deliver the Bootcamp, a non-exclusive,
+       royalty-free license to use your submission as needed to deliver the
+       Bootcamp and its review service, namely to:
+         (i)    access and review the submitted repository or ZIP;
+         (ii)   copy it into a private review environment;
+         (iii)  import its World into the private Superwork Studio;
+         (iv)   validate, execute, test, simulate, inspect and analyze the
+                submitted World and scenarios;
+         (v)    display and discuss the submission with you during feedback
+                and 1:1 review sessions;
+         (vi)   make the temporary technical copies necessary for these
+                activities; and
+         (vii)  provide feedback and suggested modifications.
+
+   (b) De-identified learnings. You also grant the Licensor a non-exclusive,
+       perpetual, royalty-free right to derive, from submissions after
+       removing information that identifies the submitter (such as company
+       names, client names and personal identifiers), de-identified,
+       normalized, aggregated or generalized patterns, structures, examples,
+       statistics and learnings, and to use them for Superwork product
+       improvement, education, research and Superwork Library development.
+
+   (c) Limits. These permissions do not transfer ownership of your original
+       Participant Work. They do not include a right to publicly redistribute
+       your raw submission.
+
+   (d) Your content. Submit only material you are allowed to share. Do not
+       include confidential information, personal data, credentials or
+       secrets (see the README's sensitive-information warning).
 
 8. Termination
 
