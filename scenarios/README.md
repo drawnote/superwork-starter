@@ -14,7 +14,7 @@ scenario:
   record: R-1001                   # seed.yaml의 레코드 id — 그 레코드의 status가 시작 상태입니다
   protects: ""                     # (adversarial) 지키려는 안전 속성
   steps:
-    - input: "Submit request R-1001."   # 자연어로 쓴 행동 (리뷰에서 그대로 실행해 봅니다)
+    - input: "Submit request R-1001."   # 자연어로 쓴 행동 (설명용)
       as: alex                          # 행위자 — principals의 id
       transition: submit                # 시도하는 transition 이름
       expect: ALLOW                     # 여러분의 예측: ALLOW 또는 DENY
@@ -24,6 +24,9 @@ scenario:
 ```
 
 시작 상태가 다른 레코드가 필요하면 `seed.yaml`에 레코드를 추가하세요 (예: `status: submitted`인 R-2001).
+
+> **중요:** 리뷰에서 강사는 `record` · `as` · `transition` 세 값 그대로 실제 Runtime에서 시나리오를 재현합니다.
+> 이 세 값은 `seed.yaml`의 레코드 id, `world.yaml`의 principal id, transition 이름과 **정확히 같아야** 합니다.
 
 ## desk-check 순서
 

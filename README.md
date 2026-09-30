@@ -137,7 +137,9 @@ Claude Code 등을 써도 좋습니다. 단, **결정은 여러분이 합니다.
 
 ---
 
-## 라이선스
+## 라이선스와 소유권
+
+Copyright © 2026 Josh Lee. All rights reserved.
 
 이 저장소는 **소스 공개(source-available)이지만 오픈소스가 아닙니다.**
 저장소의 원본 콘텐츠는 **Educational Use Only License**([`LICENSE`](LICENSE))에 따라
@@ -145,10 +147,17 @@ Claude Code 등을 써도 좋습니다. 단, **결정은 여러분이 합니다.
 상업적 사용, 프로덕션 사용, 경쟁 제품 개발, 제품 · 템플릿 · 프레임워크로의 재배포,
 제3자 제품이나 서비스에의 포함은 허용되지 않습니다.
 
-GitHub 이용약관에 따른 공개 저장소의 열람 · Fork 권리는 그대로 유지되며, Fork도 이 라이선스를 따릅니다.
-여러분이 직접 만든 숙제 결과물(여러분의 World, 답안, 시나리오, 증거)은 여러분의 것입니다.
-npm 의존성(`@superwork/world-spec`, `@superwork/cli` — MIT, `yaml` — ISC)은 각자의 라이선스를 따르며
-이 라이선스로 바뀌지 않습니다. 자세한 내용: [`NOTICE`](NOTICE)
+- **Josh Lee**가 이 저장소의 원본 코드 · 템플릿 · 문서 · 예시 및 기타 Superwork 저작물을 소유합니다.
+- **여러분**은 이 저장소를 이용해 직접 만든 숙제 결과물(여러분의 World · 답안 · 시나리오 · 증거)의 소유권을 가집니다.
+- 숙제 결과물을 소유한다고 해서, 그 안에 쓰인 스타터의 템플릿 · 문서 · 예시 등 Superwork 저작물을
+  Educational Use 라이선스 밖에서 재사용하거나 재배포할 권리가 생기지는 않습니다.
+- npm 의존성은 원래의 라이선스를 따르며 이 라이선스로 바뀌지 않습니다
+  (`@superwork/world-spec`, `@superwork/cli` — MIT, `yaml` — ISC).
 
-*This repository is source-available, not open source. Its original content is licensed only for
-Agentic World Bootcamp participation and personal educational homework — see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).*
+GitHub 이용약관에 따른 공개 저장소의 열람 · Fork 권리는 그대로 유지되며, Fork도 이 라이선스를 따릅니다.
+자세한 내용: [`LICENSE`](LICENSE), [`NOTICE`](NOTICE)
+
+*Copyright © 2026 Josh Lee. All rights reserved. This repository is source-available, not open source. Its original content is
+licensed only for Agentic World Bootcamp participation and personal educational homework; participants own their original homework,
+which does not grant rights to the starter materials beyond that license; third-party MIT/ISC components keep their licenses —
+see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).*

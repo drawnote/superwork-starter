@@ -1,8 +1,7 @@
 Superwork World Starter — Educational Use Only License
 Version 1.0
 
-Copyright (c) 2026 Josh Lee (Swit). All rights reserved except as expressly
-granted below.
+Copyright © 2026 Josh Lee. All rights reserved.
 
 This repository is SOURCE-AVAILABLE, NOT OPEN SOURCE. Its contents are
 visible to the public, but they are licensed only for the limited educational
@@ -10,25 +9,40 @@ purpose stated in this License.
 
 1. Definitions
 
-   "Starter Content" means the original content of this repository as provided
-   by the Licensor — including its documentation, assignment and worksheet
-   templates, example World, seed and scenario files, and agent instructions —
-   but not Third-Party Components or Participant Work.
+   "Licensor" means Josh Lee.
+
+   "Starter Content" means the original code, templates, documentation,
+   examples and other Superwork-authored materials in this repository as
+   provided by the Licensor — including its documentation, assignment and
+   worksheet templates, example World, seed and scenario files, and agent
+   instructions — but not Third-Party Components or Participant Work.
 
    "Third-Party Components" means software and other material that this
    repository uses or references but that is licensed under its own terms,
-   including the npm packages @superwork/world-spec and @superwork/cli and any
-   other dependency installed into node_modules.
+   including the npm packages @superwork/world-spec, @superwork/cli and yaml,
+   and any other dependency installed into node_modules.
 
-   "Participant Work" means material you create yourself while doing the
-   homework, such as your own World definition, your answers in the assignment
-   files, your scenarios and your evidence.
+   "Participant Work" means original material you create yourself while doing
+   the homework, such as your own World definition, your answers in the
+   assignment files, your scenarios and your evidence.
 
    "Permitted Purpose" means (a) participating in the Agentic World Bootcamp,
    and (b) completing, submitting and personally studying your own educational
    homework for it.
 
-2. License grant
+2. Ownership
+
+   (a) The Licensor owns the Starter Content.
+   (b) You retain ownership of your original Participant Work. Nothing in this
+       License transfers ownership of your Participant Work to the Licensor.
+   (c) Your ownership of your Participant Work does not grant you any right to
+       use, reuse or redistribute the Starter Content — including its
+       templates, documentation, examples or other Superwork-authored
+       materials, whether or not they appear inside your Participant Work —
+       except as this License permits.
+   (d) Third-Party Components retain their original licenses (Section 6).
+
+3. License grant
 
    Subject to this License, the Licensor grants you a personal, worldwide,
    non-exclusive, non-transferable, non-sublicensable, royalty-free license to
@@ -40,7 +54,7 @@ purpose stated in this License.
    keep it in your own GitHub account as a record of your coursework, provided
    this License and the NOTICE file remain included.
 
-3. Restrictions
+4. Restrictions
 
    Except as expressly permitted above, you may not, and may not allow anyone
    else to:
@@ -58,35 +72,35 @@ purpose stated in this License.
        third-party product, service, platform or dataset;
    (f) remove or alter this License, the NOTICE file or any copyright notice.
 
-4. GitHub
+5. GitHub
 
    Nothing in this License restricts the rights GitHub users have under the
    GitHub Terms of Service to view and fork a public repository on GitHub.
    Forks remain subject to this License; forking does not grant any right
    beyond it.
 
-5. Third-Party Components
+6. Third-Party Components
 
    Third-Party Components are not licensed under this License. They are
-   governed by their own licenses, which this License does not change. The
-   npm packages @superwork/world-spec and @superwork/cli are published under
-   the MIT License; see their package files in node_modules.
+   governed by their own licenses, which this License does not change or
+   restrict: @superwork/world-spec and @superwork/cli are published under the
+   MIT License, and yaml under the ISC License. See the license files in
+   node_modules.
 
-6. Participant Work
+7. Review of your homework
 
-   You keep your rights in your Participant Work. By submitting it for review,
-   you allow the Bootcamp's instructors to access, import, run and discuss it
-   for the purpose of reviewing your homework. Portions of your work that copy
-   or adapt Starter Content remain subject to this License.
+   By submitting your homework for review, you permit the Bootcamp's
+   instructors to access, import, run and discuss your Participant Work for
+   the purpose of reviewing it. This permission does not transfer ownership.
 
-7. Termination
+8. Termination
 
    This License terminates automatically if you breach it. On termination you
    must stop using the Starter Content and delete copies you control, except
    for your own Participant Work to the extent it does not contain Starter
    Content.
 
-8. No warranty; limitation of liability
+9. No warranty; limitation of liability
 
    THE STARTER CONTENT IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
    EXPRESS OR IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
@@ -94,7 +108,7 @@ purpose stated in this License.
    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING FROM OR IN
    CONNECTION WITH THE STARTER CONTENT OR ITS USE.
 
-9. Reservation of rights
+10. Reservation of rights
 
    All rights not expressly granted are reserved by the Licensor. For any use
    outside the Permitted Purpose, contact the Licensor for a separate license.

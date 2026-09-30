@@ -1,20 +1,31 @@
 Superwork World Starter — Bootcamp Homework Edition
-Copyright (c) 2026 Josh Lee (Swit)
+Copyright © 2026 Josh Lee. All rights reserved.
 
 This repository is source-available, not open source.
 
-Its original content is licensed under the Superwork World Starter
-Educational Use Only License (see LICENSE), solely for participation in the
-Agentic World Bootcamp and personal educational homework. Commercial use,
-production use, competitive product development, redistribution as a
-product, template or framework, and incorporation into third-party products
-or services are not permitted.
+Ownership
+- Josh Lee owns this repository's original code, templates, documentation,
+  examples and other Superwork-authored materials ("Starter Content").
+- Participants retain ownership of the original homework they create using
+  this starter (their World, answers, scenarios and evidence).
+- Owning your homework does not give you rights to reuse or redistribute the
+  Starter Content — its templates, documentation, examples or other
+  Superwork-authored materials — outside the Educational Use license.
+
+License
+The Starter Content is licensed under the Superwork World Starter Educational
+Use Only License (see LICENSE), solely for participation in the Agentic World
+Bootcamp and personal educational homework. Commercial use, production use,
+competitive product development, redistribution as a product, template or
+framework, and incorporation into third-party products or services are not
+permitted.
 
 Nothing here limits the rights to view and fork this public repository on
 GitHub under the GitHub Terms of Service; forks remain subject to LICENSE.
 
-Third-party components keep their own licenses, which LICENSE does not
-change:
+Third-party components
+Third-party components keep their original licenses, which LICENSE does not
+change or restrict:
 
   @superwork/world-spec  — MIT License (npm package)
   @superwork/cli         — MIT License (npm package)
