@@ -2,6 +2,8 @@
 
 > **Build the World. Run the World. Try to break the World. Fix the World before the real world does.**
 
+**Educational Use Only · Source-available · Not Open Source** — Copyright © 2026 Josh Lee. All rights reserved. ([라이선스](#라이선스와-소유권))
+
 이 저장소에서 여러분은 **자신의 업무 하나를 World(실행 가능한 세계)로 모델링**하고,
 그 World를 스스로 깨뜨려 보고, 고치고, 무엇을 왜 그렇게 결정했는지 기록합니다.
 
@@ -13,6 +15,12 @@
 
 > **제출 마감: 2026-10-04 23:59 KST** (October 4, 2026, 11:59 PM Korea Standard Time)
 
+> **⚠️ 민감정보 주의**
+> 실제 업무를 모델링해도 좋지만 회사 기밀, 고객 개인정보, API Key, 계정정보, 내부 시스템 주소 등 민감정보를 저장소에 올리지 마세요.
+> 회사명·고객명·사람 이름·금액·식별정보 등은 필요하면 익명화하거나 예시 데이터로 바꾸세요.
+> 비밀값(secret)이나 계정 정보(credential)는 커밋하지 말고, 공유 권한이 없는 회사 문서는 포함하지 마세요.
+> ZIP으로 제출하더라도 공유 권한이 없는 정보를 넣어도 된다는 뜻은 아닙니다.
+
 ---
 
 ## 0. 시작하기 (10분)
@@ -23,7 +31,8 @@ npm install
 npm run validate          # 템플릿 상태 그대로 통과해야 정상입니다
 ```
 
-GitHub에 제출하려면 이 저장소를 여러분의 계정으로 가져가세요 (Fork 또는 새 저장소로 push).
+제출은 GitHub 저장소 URL(기본) 또는 저장소 ZIP(대체)으로 합니다 — [제출 체크리스트](#5-제출-체크리스트) 참고.
+GitHub로 제출하려면 이 저장소를 여러분의 계정으로 가져가세요 (Fork 또는 새 저장소로 push).
 
 ---
 
@@ -43,7 +52,7 @@ CHOOSE → MODEL → VALIDATE → RUN → BREAK → FIX → RE-RUN → REFLECT �
 | **FIX** | 발견한 설계 빈틈을 **World 규칙을 바꿔서** 고칩니다 | `world.yaml`, `assignment/break-fix.md` |
 | **RE-RUN** | 다시 validate하고, 같은 시나리오의 결과를 다시 판정합니다 | `assignment/break-fix.md`, `evidence/` |
 | **REFLECT** | 배운 것을 짧게 씁니다 | `assignment/reflection.md` |
-| **SUBMIT** | 저장소 URL(또는 zip)을 제출합니다 | 아래 체크리스트 |
+| **SUBMIT** | GitHub 저장소 URL(또는 ZIP)을 제출합니다 | 아래 체크리스트 |
 
 자세한 과제 요건: [`assignment/README.md`](assignment/README.md)
 
@@ -112,6 +121,13 @@ Claude Code 등을 써도 좋습니다. 단, **결정은 여러분이 합니다.
 
 ## 5. 제출 체크리스트
 
+> **⚠️ 민감정보 주의**
+> 실제 업무를 모델링해도 좋지만 회사 기밀, 고객 개인정보, API Key, 계정정보, 내부 시스템 주소 등 민감정보를 저장소에 올리지 마세요.
+> 회사명·고객명·사람 이름·금액·식별정보 등은 필요하면 익명화하거나 예시 데이터로 바꾸세요.
+> 비밀값(secret)이나 계정 정보(credential)는 커밋하지 말고, 공유 권한이 없는 회사 문서는 포함하지 마세요.
+> ZIP으로 제출하더라도 공유 권한이 없는 정보를 넣어도 된다는 뜻은 아닙니다.
+
+
 - [ ] `world.yaml` — 여러분의 World (`npm run validate` 통과)
 - [ ] `assignment/world-fit.md` — World Model이 필요한 이유 3–6문장
 - [ ] `assignment/entity-decisions.md` — 최종 Entity 3개 이상, Entity가 **아닌** 개념 2개 이상, 각각 이유
@@ -121,12 +137,18 @@ Claude Code 등을 써도 좋습니다. 단, **결정은 여러분이 합니다.
 - [ ] `assignment/break-fix.md` — 발견한 설계 빈틈(또는 이미 막혀 있던 실패) · 수정 · 같은 시나리오 재판정
 - [ ] `evidence/` — 수정 전/후 validate 결과
 - [ ] `assignment/reflection.md` — 짧은 회고
+- [ ] 민감정보 없음 — 회사 기밀 · 고객 개인정보 · API Key · 계정정보 · 내부 시스템 주소가 없고, 필요한 부분은 익명화했다
 
 **제출 마감: 2026-10-04 23:59 KST** (October 4, 2026, 11:59 PM Korea Standard Time)
 
 **제출 방법**
-1. **기본:** GitHub 저장소 URL (공개 저장소, 또는 강사를 collaborator로 초대)
-2. **대체:** 저장소 전체를 zip으로 압축해 제출 (`node_modules/` 제외)
+1. **기본:** GitHub 저장소 URL
+2. **대체:** 저장소 전체를 ZIP으로 압축해 제출 (`node_modules/` 제외)
+
+회사 정책, 기밀 내용, 고객 정보 때문에 작업을 공개할 수 없다면 GitHub URL 대신 ZIP으로 제출하세요.
+공개 GitHub 저장소, 강사 collaborator 초대, Superwork 로그인이나 제품 초대는 필요하지 않습니다.
+
+**제출 링크는 강사가 별도로 안내합니다.**
 
 ---
 
