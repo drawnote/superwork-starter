@@ -1,137 +1,154 @@
-# Superwork World Starter
+# Superwork World Starter — Bootcamp Homework Edition
 
-> **Watch the world work. Then build your own.**
+> **Build the World. Run the World. Try to break the World. Fix the World before the real world does.**
 
-이 저장소에서 여러분은 **자신의 업무 도메인을 실행 가능한 세계(Agentic World)로 모델링**합니다.
-강의(Day 1)에서 본 Expense Approval World와 같은 언어 — `superwork.world/v1` — 로,
-여러분의 도메인(구매, 영업, CS, 채용, 계약, 장애 대응 …)을 선언합니다.
+이 저장소에서 여러분은 **자신의 업무 하나를 World(실행 가능한 세계)로 모델링**하고,
+그 World를 스스로 깨뜨려 보고, 고치고, 무엇을 왜 그렇게 결정했는지 기록합니다.
 
-완료 기준은 하나입니다:
+- 필요한 것: Node.js 18+, Git, (선택) Claude Code 같은 코딩 에이전트
+- 필요 없는 것: Superwork 계정, 로그인, 초대, Studio 접근 — **이 숙제는 전부 로컬에서 완료됩니다.**
 
-```
-superwork validate --summary
-```
+수업에서는 강사가 Superwork Studio로 같은 과정을 시연합니다. 여러분은 그 과정을
+**직접 생각하며** 이 저장소에서 따라 합니다.
 
-의 마지막 줄이 **`READY FOR STUDIO IMPORT ✓`** 가 되는 것.
-이 상태의 저장소만 Day 2 오전 **Import Showcase**에서 Superwork Studio에 올라가
-실제로 실행되는 것을 볼 수 있습니다.
+> **제출 마감: 2026-10-04 23:59 KST** (October 4, 2026, 11:59 PM Korea Standard Time)
 
 ---
 
-## 사전 과제 (Day 1 이전 · 10분)
-
-수업 당일 환경 문제로 시간을 잃지 않기 위한 체크입니다.
+## 0. 시작하기 (10분)
 
 ```bash
-# 1. 이 저장소를 clone
-git clone <your-fork-url> && cd superwork-starter
-
-# 2. 설치
+git clone https://github.com/swit001/superwork-starter.git && cd superwork-starter
 npm install
-
-# 3. 검증 실행 — 템플릿 상태 그대로 통과해야 정상입니다
-npx superwork validate
-
-# 4. world.yaml의 mission 한 줄을 여러분의 언어로 수정
-
-# 5. 다시 검증
-npx superwork validate
-
-# 6. push
-git add -A && git commit -m "pre-work: environment check" && git push
+npm run validate          # 템플릿 상태 그대로 통과해야 정상입니다
 ```
 
-push까지 완료되면 다음 네 가지가 검증된 것입니다:
-
-```
-✓ Environment ready      ✓ Coding agent ready
-✓ GitHub ready           ✓ Superwork CLI ready
-```
-
-코딩 에이전트(Claude Code 등)로 이 저장소를 열어두세요.
-`AGENTS.md`가 에이전트에게 작업 규칙을 알려줍니다.
+GitHub에 제출하려면 이 저장소를 여러분의 계정으로 가져가세요 (Fork 또는 새 저장소로 push).
 
 ---
 
-## Build Day 가이드 (10/1)
-
-각 단계는 같은 패턴을 반복합니다:
+## 1. 숙제의 흐름
 
 ```
-Learn → Example → Ask your coding agent → Edit → Validate
+CHOOSE → MODEL → VALIDATE → RUN → BREAK → FIX → RE-RUN → REFLECT → SUBMIT
 ```
 
-막히면 언제든: `npx superwork explain <topic>`
-(topics: `states` `transitions` `constraints` `expressions`)
+| 단계 | 여러분이 하는 일 | 결과물 |
+|---|---|---|
+| **CHOOSE** | World로 만들 업무 하나를 고르고, World Model이 필요한 이유를 씁니다 | `assignment/world-fit.md` |
+| **MODEL** | Entity · State · Transition · Constraint(ESTC)를 결정하고 `world.yaml`에 선언합니다 | `world.yaml`, `assignment/entity-decisions.md`, `assignment/modeling-decisions.md` |
+| **VALIDATE** | `npm run validate` 로 World가 규격에 맞는지 확인합니다 | `evidence/` |
+| **RUN** | 정상 시나리오 하나를 쓰고, `world.yaml`을 보며 손으로 판정(desk-check)합니다 | `scenarios/happy-path.yaml` |
+| **BREAK** | World를 깨뜨릴 공격 시나리오 하나를 쓰고 판정합니다 | `scenarios/adversarial.yaml`, `assignment/break-fix.md` |
+| **FIX** | 발견한 설계 빈틈을 **World 규칙을 바꿔서** 고칩니다 | `world.yaml`, `assignment/break-fix.md` |
+| **RE-RUN** | 다시 validate하고, 같은 시나리오의 결과를 다시 판정합니다 | `assignment/break-fix.md`, `evidence/` |
+| **REFLECT** | 배운 것을 짧게 씁니다 | `assignment/reflection.md` |
+| **SUBMIT** | 저장소 URL(또는 zip)을 제출합니다 | 아래 체크리스트 |
 
-### STEP 1 — Mission
-*What work is this world trying to accomplish?*
-
-`world.id`와 `mission`을 여러분의 도메인으로. mission은 이 세계가 완수하려는
-**일** 한 문장입니다 — 기능 목록이 아니라 업무의 목적.
-
-### STEP 2 — Entities
-*What things must exist?*
-
-이 일에 등장하는 것들을 선언합니다. 사람, 문서, 돈, 승인 대상…
-상태기계를 갖는 엔티티(`owned_state: true`)는 **하나로 시작**하세요.
-그 하나가 이 세계의 주인공입니다.
-
-> 에이전트에게: "우리 회사의 ___ 업무에 등장하는 엔티티를 함께 정리하자.
-> 내가 설명하면 너는 entities 초안을 제안하고, 내가 승인한 것만 반영해."
-
-### STEP 3 — State
-*What must the world know as fact?*
-
-주인공 엔티티가 거치는 상태를 나열합니다. **State와 attribute의 구분**:
-State는 흐름 속의 위치(어디까지 왔는가), attribute는 그 객체가 가진 값(얼마인가,
-누구의 것인가)입니다. "승인됨"은 state, "승인 금액"은 attribute. 여기서 중요한 관점 하나 —
-**State는 AI의 기억이 아니라, 실행 엔진이 쓰는 공식 사실**입니다.
-끝나면 돌아올 수 없는 상태는 `terminal_states`로.
-
-### STEP 4 — Transitions
-*What is allowed to change?*
-
-상태 사이의 허용된 변화를 선언합니다. 각 transition에는
-**누가**(`principal_role`) 그 변화를 일으킬 수 있는지가 반드시 붙습니다.
-`effects`는 상태 라벨 변경 이상의 인과(예산 예약 등)가 있을 때.
-
-### STEP 5 — Constraints
-*What must never be allowed?*
-
-이 세계의 규칙을 선언합니다. Day 1의 그 장면을 기억하세요 —
-같은 사람, 같은 상태, 같은 행동이었는데 **C4 하나가 실행을 막았습니다.**
-여러분 도메인의 C4는 무엇입니까? 금액 한도? 셀프 승인 금지? 순서 강제?
-
-각 constraint에는 사람이 읽는 `message`를, 대안 경로가 있으면
-`on_fail_hint`를 붙이세요. 세계는 거부만 하지 않고 다음 경로를 알려줍니다.
-
-### STEP 6 — Validate
-*Does your world form a coherent executable model?*
-
-```bash
-npx superwork validate --summary
-```
-
-`READY FOR STUDIO IMPORT ✓` 가 나오면 push:
-
-```bash
-git add -A && git commit -m "build day: world v0.1.0" && git push
-```
-
-**마감: 10/1 자정.** Build & Review 티어는 이 시점의 저장소가
-1:1 리뷰 세션의 입력물이 됩니다.
+자세한 과제 요건: [`assignment/README.md`](assignment/README.md)
 
 ---
 
-## Day 2 이후
+## 2. 명령어
 
-- **Mini Build (Day 2 오후):** `scenarios/`에 시나리오를 추가하고
-  agent 정의를 얹습니다 — 세션에서 안내합니다.
-- **1주 Q&A 기간:** 이 세계를 계속 발전시키세요. `rejected → draft` 재제출
-  경로를 추가하면 어떤 constraint와 audit 요구가 함께 생기는지 — 좋은 확장 과제입니다.
+```bash
+npm run validate      # World 규격 검사 — 문제가 있으면 어디가 왜 틀렸고 어떻게 고치는지 알려줍니다
+npm run summary       # 요약 + 마지막 줄 READY FOR STUDIO IMPORT ✓
+npm run evidence      # 요약 결과를 evidence/validate-summary.txt 로 저장 (제출 증거)
+npx superwork explain <topic>   # DSL 도움말 (states | transitions | constraints | expressions)
+```
+
+### validate가 확인하는 것
+- `world.yaml`이 `superwork.world/v1` 규격에 맞는지 (구조 · 참조 · transition · constraint 표현식 문법)
+- 선언한 상태 · 역할 · 제약이 서로 올바르게 연결되어 있는지
+
+### validate가 증명하지 **않는** 것
+- 여러분의 업무 규칙이 **옳은지** — 셀프 승인을 막는 규칙이 빠져 있어도 World는 "valid"입니다.
+- **규격에 맞는 World도 나쁜 업무 설계일 수 있습니다.** 그래서 BREAK 단계가 있습니다.
+
+### RUN은 어떻게 하나요?
+이 저장소에는 실행 엔진이 없습니다. 여러분은 각 시나리오를 `world.yaml`을 보며
+**손으로 판정(desk-check)** 하고 예상 결과(ALLOW/DENY)와 이유를 기록합니다.
+제출 후 리뷰에서는 강사가 여러분의 저장소를 Superwork Studio로 가져와
+**같은 시나리오를 실제 Runtime으로 실행**하고, 여러분의 예측과 실제 결과를 함께 비교합니다.
+판정 방법: [`scenarios/README.md`](scenarios/README.md)
+
+---
+
+## 3. 저장소 구조
+
+```text
+world.yaml                  여러분의 World (루트에 있어야 합니다 — 위치를 옮기지 마세요)
+seed.yaml                   시나리오의 시작 상태가 되는 샘플 레코드
+scenarios/
+  README.md                 시나리오 형식과 desk-check 방법
+  happy-path.yaml           정상 시나리오
+  adversarial.yaml          공격(Break) 시나리오
+assignment/
+  README.md                 과제 요건
+  world-fit.md              왜 World Model이 필요한가
+  entity-decisions.md       개념 → 분류 → 이유
+  modeling-decisions.md     애매했던 모델링 결정
+  break-fix.md              BEFORE → FIX → AFTER
+  reflection.md             회고
+  claude-code-prompt.md     코딩 에이전트와 함께 할 때
+evidence/
+  README.md                 제출할 증거
+docs/                       개념 · 도메인 예시 · DSL 레퍼런스
+AGENTS.md                   코딩 에이전트의 작업 규칙
+.superwork/schema-version   언어 버전 (수정하지 마세요)
+```
+
+---
+
+## 4. 코딩 에이전트와 함께
+
+Claude Code 등을 써도 좋습니다. 단, **결정은 여러분이 합니다.**
+에이전트가 답을 먼저 쓰지 않고 여러분에게 묻도록 하는 시작 프롬프트:
+[`assignment/claude-code-prompt.md`](assignment/claude-code-prompt.md).
+에이전트는 `AGENTS.md`의 규칙을 따릅니다.
+
+---
+
+## 5. 제출 체크리스트
+
+- [ ] `world.yaml` — 여러분의 World (`npm run validate` 통과)
+- [ ] `assignment/world-fit.md` — World Model이 필요한 이유 3–6문장
+- [ ] `assignment/entity-decisions.md` — 최종 Entity 3개 이상, Entity가 **아닌** 개념 2개 이상, 각각 이유
+- [ ] `assignment/modeling-decisions.md` — 애매했던 결정 2개 이상 (대안 · 선택 · 이유 · ESTC 영향)
+- [ ] `scenarios/happy-path.yaml` — 정상 시나리오 1개 + 예상 판정과 이유
+- [ ] `scenarios/adversarial.yaml` — 공격 시나리오 1개 + 예상 판정과 이유
+- [ ] `assignment/break-fix.md` — 발견한 설계 빈틈(또는 이미 막혀 있던 실패) · 수정 · 같은 시나리오 재판정
+- [ ] `evidence/` — 수정 전/후 validate 결과
+- [ ] `assignment/reflection.md` — 짧은 회고
+
+**제출 마감: 2026-10-04 23:59 KST** (October 4, 2026, 11:59 PM Korea Standard Time)
+
+**제출 방법**
+1. **기본:** GitHub 저장소 URL (공개 저장소, 또는 강사를 collaborator로 초대)
+2. **대체:** 저장소 전체를 zip으로 압축해 제출 (`node_modules/` 제외)
+
+---
 
 ## 규칙 하나
 
-검증 에러가 나면 **세계를 고치세요. 검증기를 고치지 마세요.**
-(`AGENTS.md` 규칙 5 — 여러분의 코딩 에이전트도 같은 규칙을 따릅니다.)
+검증 에러가 나면 **World를 고치세요. 검증기를 고치지 마세요.**
+그리고 BREAK에서 빈틈을 찾으면 **프롬프트가 아니라 World를 고치세요.**
+
+---
+
+## 라이선스
+
+이 저장소는 **소스 공개(source-available)이지만 오픈소스가 아닙니다.**
+저장소의 원본 콘텐츠는 **Educational Use Only License**([`LICENSE`](LICENSE))에 따라
+**Agentic World Bootcamp 참여와 개인 교육용 숙제**에만 사용할 수 있습니다.
+상업적 사용, 프로덕션 사용, 경쟁 제품 개발, 제품 · 템플릿 · 프레임워크로의 재배포,
+제3자 제품이나 서비스에의 포함은 허용되지 않습니다.
+
+GitHub 이용약관에 따른 공개 저장소의 열람 · Fork 권리는 그대로 유지되며, Fork도 이 라이선스를 따릅니다.
+여러분이 직접 만든 숙제 결과물(여러분의 World, 답안, 시나리오, 증거)은 여러분의 것입니다.
+npm 의존성(`@superwork/world-spec`, `@superwork/cli` — MIT, `yaml` — ISC)은 각자의 라이선스를 따르며
+이 라이선스로 바뀌지 않습니다. 자세한 내용: [`NOTICE`](NOTICE)
+
+*This repository is source-available, not open source. Its original content is licensed only for
+Agentic World Bootcamp participation and personal educational homework — see [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE).*

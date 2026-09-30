@@ -1,0 +1,26 @@
+Superwork World Starter — Bootcamp Homework Edition
+Copyright (c) 2026 Josh Lee (Swit)
+
+This repository is source-available, not open source.
+
+Its original content is licensed under the Superwork World Starter
+Educational Use Only License (see LICENSE), solely for participation in the
+Agentic World Bootcamp and personal educational homework. Commercial use,
+production use, competitive product development, redistribution as a
+product, template or framework, and incorporation into third-party products
+or services are not permitted.
+
+Nothing here limits the rights to view and fork this public repository on
+GitHub under the GitHub Terms of Service; forks remain subject to LICENSE.
+
+Third-party components keep their own licenses, which LICENSE does not
+change:
+
+  @superwork/world-spec  — MIT License (npm package)
+  @superwork/cli         — MIT License (npm package)
+  yaml                   — ISC License (npm dependency of @superwork/world-spec)
+  Other packages installed into node_modules are governed by their own
+  license files.
+
+Superwork and Superwork Studio are proprietary and are not part of this
+repository. No license to them is granted.

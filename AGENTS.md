@@ -22,5 +22,27 @@ Rules:
 8. Use `superwork explain <topic>` when unsure about DSL syntax
    (topics: states, transitions, constraints, expressions).
 
-The goal state:  superwork validate --summary
-ends with:       READY FOR STUDIO IMPORT ✓
+Homework rules (Bootcamp Homework Edition — see assignment/README.md):
+
+9. The assignment files are the participant's own thinking. Ask questions and
+   offer candidates, but do not write their classifications, reasons,
+   modeling decisions or reflection for them.
+10. When a concept can be modeled in more than one way (for example an approval
+    as a State, a Transition or its own Entity), show the alternatives, ask the
+    participant to choose, and have them record the choice and why in
+    assignment/modeling-decisions.md.
+11. There is no execution engine in this repository. A scenario result is a
+    PREDICTION made by desk-checking world.yaml (state → role → guards → global
+    constraints; see scenarios/README.md). Ask the participant to predict first.
+    Never say a scenario "ran", "passed" or was "executed".
+12. When a scenario exposes a design gap, fix it by changing the rules in
+    world.yaml — not by prompts, prose or code — then validate again and
+    re-predict the same scenario. Record BEFORE / FIX / AFTER in
+    assignment/break-fix.md.
+13. Keep the repository layout: world.yaml and seed.yaml at the root,
+    scenarios/*.yaml, .superwork/schema-version. The instructor imports this
+    layout for review.
+
+The goal state:
+- superwork validate --summary ends with:  READY FOR STUDIO IMPORT ✓
+- every item of the submission checklist in README.md is done by the participant.

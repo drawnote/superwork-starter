@@ -2,9 +2,14 @@
   "name": "superwork-world-starter",
   "private": true,
   "version": "0.1.0",
-  "scripts": { "validate": "superwork validate", "summary": "superwork validate --summary" },
+  "scripts": {
+    "validate": "superwork validate",
+    "summary": "superwork validate --summary",
+    "evidence": "superwork validate --summary > evidence/validate-summary.txt"
+  },
   "dependencies": {
     "@superwork/world-spec": "^1.0.0",
     "@superwork/cli": "^1.0.0"
-  }
+  },
+  "license": "SEE LICENSE IN LICENSE"
 }
