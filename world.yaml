@@ -51,7 +51,6 @@ states:
     - draft
     - requested
     - submitted
-    - under_review
     - revision_required
     - validated
 
@@ -70,13 +69,9 @@ transitions:
     to: submitted
     principal_role: company_contact
     guards: [C5_own_company_contact_only]
-  start_review:
-    from: submitted
-    to: under_review
-    principal_role: [fund_admin, investment_manager]
-    guards: [C4_assigned_staff_only]
+    effects: [notify_reviewer]
   request_revision:
-    from: under_review
+    from: submitted
     to: revision_required
     principal_role: [fund_admin, investment_manager]
     guards: [C4_assigned_staff_only]
@@ -86,8 +81,8 @@ transitions:
     to: submitted
     principal_role: company_contact
     guards: [C5_own_company_contact_only]
-  validate:
-    from: under_review
+  confirm:                          # 내부 담당자의 최종 확인 — Agent 점검 결과(C1~C3)를 통과해야 함
+    from: submitted
     to: validated
     principal_role: [fund_admin, investment_manager]
     guards: [C1_required_docs_complete, C2_company_match, C3_document_dates_valid, C4_assigned_staff_only]

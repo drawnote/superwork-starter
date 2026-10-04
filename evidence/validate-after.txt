@@ -5,8 +5,8 @@ Version        0.1.0
 Spec           superwork.world/v1
 
 Entities       4
-States         6
-Transitions    6
+States         5
+Transitions    5
 Constraints    5
 
 Schema         PASS

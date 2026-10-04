@@ -1,4 +1,4 @@
-# 정상 시나리오 (RUN) — CompanyReport 전체 흐름: 요청 → 제출 → 검토 시작 → 검증 완료
+# 정상 시나리오 (RUN) — CompanyReport 전체 흐름: 요청 → 제출 → 최종 확인
 # 형식과 desk-check 방법: scenarios/README.md
 # 판정은 예측(PREDICTION)입니다. 리뷰에서 강사가 실제 Runtime 결과와 비교합니다.
 scenario:
@@ -26,27 +26,19 @@ scenario:
         Role: contact_a has company_contact = submit.principal_role.
         Guard C5_own_company_contact_only: principal.id (contact_a) ==
         companyreport.company.contact (CO-A → contact_a) → true.
+        Effect: notify_reviewer.
 
-    - input: "Fund admin starts reviewing the submitted report."
+    - input: "Fund admin gives the final confirmation; the report becomes the official record."
       as: admin
-      transition: start_review
+      transition: confirm
       expect: ALLOW
       because: >
-        State: submitted (after step 2) = start_review.from.
-        Role: admin has fund_admin, which is in start_review.principal_role.
-        Guard C4_assigned_staff_only: "fund_admin" in principal.roles → true.
-        (This relies on `in principal.roles` working at Runtime — an undocumented pattern;
-        if the review shows DENY here, this expression is the reason.)
-
-    - input: "Fund admin validates the report as the official record."
-      as: admin
-      transition: validate
-      expect: ALLOW
-      because: >
-        State: under_review (after step 3) = validate.from.
-        Role: admin has fund_admin, which is in validate.principal_role.
+        State: submitted (after step 2) = confirm.from.
+        Role: admin has fund_admin, which is in confirm.principal_role.
         C1_required_docs_complete: required_docs_complete (true) == true → true.
         C2_company_match: submitted_company (CO-A) == company (CO-A) → true.
         C3_document_dates_valid: document_dates_valid (true) == true → true.
-        C4_assigned_staff_only: "fund_admin" in principal.roles → true (same caveat as step 3).
+        C4_assigned_staff_only: "fund_admin" in principal.roles → true.
+        (This relies on `in principal.roles` working at Runtime — an undocumented pattern;
+        if the review shows DENY here, this expression is the reason.)
         No global constraints. Result: validated (terminal).
