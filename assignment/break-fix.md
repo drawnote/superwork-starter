@@ -20,27 +20,60 @@
 
 | 항목 | 기록 |
 |---|---|
-| 시나리오 (파일 · 이름) | |
-| 지키려는 안전 속성 | 예: "누구도 자신의 요청을 승인할 수 없다" |
-| 시작 레코드와 상태 | |
-| 행위자 / 역할 | |
-| 시도한 Transition | |
-| 관련 Constraint | |
-| **예상 판정** | ALLOW / DENY |
-| 이유 (desk-check) | |
-| 문제 | ALLOW라면: 어떤 규칙이 빠져 있었나? · DENY라면: 어떤 규칙이 막았나? |
+| 시나리오 (파일 · 이름) | 다른 기업 담당자가 기업 현황 자료를 제출 (scenarios/adversarial.yaml · submit-by-other-company-contact) |
+| 지키려는 안전 속성 | 기업 담당자는 자신의 기업에 대한 기업 현황 자료만 제출할 수 있다. |
+| 시작 레코드와 상태 | CR-A-2026Q4, requested |
+| 행위자 / 역할 | contact_b / company_contact |
+| 시도한 Transition | submit |
+| 관련 Constraint | 없음 |
+| **예상 판정** | ALLOW  |
+| 이유 (desk-check) | submit에 guard가 부재했음. |
+| 문제 | ALLOW라면: 기업현황자료는 해당 기업의 담당자만 제출할 수 있도록 했어야 함 |
 
 ## 3. FIX — World 규칙을 바꾸기
 
 프롬프트나 코드가 아니라 **`world.yaml`의 규칙**을 바꿉니다.
 
-- 바꾼 것: (새 Constraint · Transition에 guard 추가 · 역할 변경 · 상태/전이 수정 …)
+- 바꾼 것: 
+  PortfolioCompany에 contact 속성 추가
+  C5 constraint 추가
+  submit과 resubmit의 guard를 []에서 [C5_own_company_contact_only]로 변경
 - 변경 전 → 변경 후 (해당 부분만 붙여 넣기):
 
 ```yaml
 # before
+entities:
+  PortfolioCompany:
+    attributes:
+      id: string
+      name: string
+      investment_manager: string         # principal id (기업 담당 심사역)
+
+transitions:
+  submit:
+    guards: []
+  resubmit:
+    guards: []
 
 # after
+entities:
+  PortfolioCompany:
+    attributes:
+      id: string
+      name: string
+      investment_manager: string         # principal id (기업 담당 심사역)
+      contact: string                    # principal id (기업 측 자료 제출 담당자, 기업당 1명)
+
+transitions:
+  submit:
+    guards: [C5_own_company_contact_only]
+  resubmit:
+    guards: [C5_own_company_contact_only]
+
+constraints:
+ C5_own_company_contact_only:
+    expr: principal.id == companyreport.company.contact
+    message: Only the contact of this report's portfolio company can submit its documents.
 ```
 
 - `npm run validate` 결과 (수정 후) → `../evidence/`에 저장
@@ -49,9 +82,14 @@
 
 | 항목 | 기록 |
 |---|---|
-| 같은 시나리오 | |
-| **새 예상 판정** | ALLOW / DENY |
-| 이유 — 이제 어떤 규칙이 판정을 바꾸는가 | |
+| 시나리오 (파일 · 이름) | 다른 기업 담당자가 기업 현황 자료를 제출 (scenarios/adversarial.yaml · submit-by-other-company-contact) |
+| 지키려는 안전 속성 | 기업 담당자는 자신의 기업에 대한 기업 현황 자료만 제출할 수 있다. |
+| 시작 레코드와 상태 | CR-A-2026Q4, requested |
+| 행위자 / 역할 | contact_b / company_contact |
+| 시도한 Transition | submit |
+| 관련 Constraint | C5_own_company_contact_only |
+| **새 예상 판정** | DENY  |
+| 이유 (desk-check) | contact_b와 CR-A-2026Q4.company(CO-A).contact(contact_a)를 비교 → 거짓 → DENY |
 
 ## 5. 리뷰에서 (강사 기록란 — 비워 두세요)
 
