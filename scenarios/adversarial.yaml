@@ -1,17 +1,23 @@
 # 공격 시나리오 (BREAK) — 여러분의 World가 막아야 하는 일을 "일어나게" 시도합니다.
 # 형식과 desk-check 방법: scenarios/README.md · 기록: assignment/break-fix.md
 # 판정은 예측(PREDICTION)입니다. 리뷰에서 강사가 실제 Runtime 결과와 비교합니다.
+#
+# BEFORE FIX: expect ALLOW — submit had no guards, so any company_contact could submit
+#             any company's report (attack succeeds = design gap).
+# FIX:        PortfolioCompany.contact + C5_own_company_contact_only on submit / resubmit.
+# AFTER FIX:  expect DENY (below).
 scenario:
-  name: submit-by-someone-else
+  name: submit-by-other-company-contact
   kind: adversarial
-  record: R-1001
-  protects: "Only the requester can submit their own request."
+  record: CR-A-2026Q4             # seed.yaml — status: requested 가 시작 상태
+  protects: "Only the contact of the report's own portfolio company can submit its documents."
   steps:
-    - input: "Submit request R-1001."
-      as: blake                   # 요청자가 아닌 다른 employee
+    - input: "Company B's contact submits documents into Company A's 2026Q4 report."
+      as: contact_b               # B사 담당자 — CO-A의 담당자가 아님
       transition: submit
-      expect: DENY                # 여러분의 예측 — 틀려도 괜찮습니다
+      expect: DENY                # 예측 (AFTER FIX)
       because: >
-        State: R-1001 is draft = submit.from.
-        Role: blake has employee = submit.principal_role.
-        Guard C1_requester_only: principal.id (blake) == request.requester (alex) → false → DENY.
+        State: CR-A-2026Q4 is requested = submit.from.
+        Role: contact_b has company_contact = submit.principal_role.
+        Guard C5_own_company_contact_only: principal.id (contact_b) ==
+        companyreport.company.contact (CO-A → contact_a) → false → DENY.

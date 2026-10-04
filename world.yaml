@@ -1,63 +1,135 @@
 # ─────────────────────────────────────────────
 #  Your Superwork World
-#  이 파일이 여러분의 세계 전체입니다. 예시(구매 요청)를 여러분의 업무로 바꾸세요.
+#  이 파일이 여러분의 세계 전체입니다.
 #  결정의 이유는 assignment/ 에 기록하고,
 #  바꿀 때마다 반드시:  npm run validate
 #  이 파일은 저장소 루트에 두세요 (리뷰 Import 규약).
 # ─────────────────────────────────────────────
 
 world:
-  id: my-world                     # 여러분의 World id (예: procurement-approval)
+  id: portfolio-company-report
   version: 0.1.0
   spec: superwork.world/v1         # 언어 버전 — 수정하지 마세요
   mission: >
-    TODO: 이 세계가 완수하려는 일을 한 문장으로.
-    (예: Process purchase requests safely from submission to delivery.)
+    Request, collect and verify each portfolio company's periodic status report
+    so that only complete, correct and timely data becomes the official record.
 
 # E — Entities: 무엇이 존재하고 추적되는가? (assignment/entity-decisions.md)
 entities:
-  # 예시 — 여러분의 도메인으로 교체하세요
-  Request:
+  CompanyReport:
     attributes:
       id: string
-      amount: money
-      requester: ref(Employee)
+      company: ref(PortfolioCompany)
+      reporting_period: string
+      submitted_company: ref(PortfolioCompany)
+      required_docs_complete: boolean    # Agent 자동 점검 결과 (올바른 서류 종류로 모두 제출됨)
+      document_dates_valid: boolean      # Agent 자동 점검 결과 (reporting_period 기준 기준일·유효기간)
+      revision_reason: string            # 보완 요청 사유 (send_revision_request에 포함)
       status: state
-    owned_state: true              # 상태기계를 갖는 엔티티는 하나로 시작하세요
-  Employee:
+    owned_state: true
+  Investment:
+    attributes:
+      id: string
+      fund: ref(Fund)
+      company: ref(PortfolioCompany)
+      investment_manager: string         # principal id
+  Fund:
     attributes:
       id: string
       name: string
-      manager: ref(Employee)
+      fund_manager: string               # principal id
+  PortfolioCompany:
+    attributes:
+      id: string
+      name: string
+      investment_manager: string         # principal id (기업 담당 심사역)
+      contact: string                    # principal id (기업 측 자료 제출 담당자, 기업당 1명)
 
 # S — States: 주인공 Entity가 흐름 속 어디에 있는가?
 states:
-  Request:
+  CompanyReport:
     - draft
+    - requested
     - submitted
-    # TODO: 여러분의 상태들
+    - under_review
+    - revision_required
+    - validated
 
-terminal_states: []                # 최종 사실 (예: [closed, rejected])
+terminal_states: [validated]
 
 # T — Transitions: 무엇이 상태를 바꾸고, 누가 할 수 있는가?
 transitions:
-  submit:
+  request_report:
     from: draft
+    to: requested
+    principal_role: [fund_admin, investment_manager]
+    guards: [C4_assigned_staff_only]
+    effects: [send_input_link]
+  submit:
+    from: requested
     to: submitted
-    principal_role: employee
-    guards: [C1_requester_only]
+    principal_role: company_contact
+    guards: [C5_own_company_contact_only]
+  start_review:
+    from: submitted
+    to: under_review
+    principal_role: [fund_admin, investment_manager]
+    guards: [C4_assigned_staff_only]
+  request_revision:
+    from: under_review
+    to: revision_required
+    principal_role: [fund_admin, investment_manager]
+    guards: [C4_assigned_staff_only]
+    effects: [send_revision_request]
+  resubmit:
+    from: revision_required
+    to: submitted
+    principal_role: company_contact
+    guards: [C5_own_company_contact_only]
+  validate:
+    from: under_review
+    to: validated
+    principal_role: [fund_admin, investment_manager]
+    guards: [C1_required_docs_complete, C2_company_match, C3_document_dates_valid, C4_assigned_staff_only]
 
 # C — Constraints: 무엇이 절대 허용되면 안 되는가?
 constraints:
-  C1_requester_only:
-    expr: principal.id == request.requester
-    message: Only the requester can submit.
+  C1_required_docs_complete:
+    expr: companyreport.required_docs_complete == true
+    message: All required documents must be submitted as the correct document type before the report can be validated.
+  C2_company_match:
+    expr: companyreport.submitted_company == companyreport.company
+    message: The submitted documents must belong to this report's portfolio company.
+  C3_document_dates_valid:
+    expr: companyreport.document_dates_valid == true
+    message: Every document's base date and validity period must match the reporting rules.
+  C4_assigned_staff_only:
+    expr: '"fund_admin" in principal.roles or principal.id == companyreport.company.investment_manager'
+    message: Only fund admin or the investment manager assigned to this company can perform this action.
+  C5_own_company_contact_only:
+    expr: principal.id == companyreport.company.contact
+    message: Only the contact of this report's portfolio company can submit its documents.
 
 # 행위자 — 시나리오의 `as`는 여기의 id를 씁니다
 principals:
-  - id: alex
-    name: Alex
-    roles: [employee]
-  - id: blake
-    name: Blake
-    roles: [employee]
+  - id: admin
+    name: Fund Admin
+    roles: [fund_admin]
+  - id: fm_a
+    name: Fund Manager A
+    roles: [fund_manager]
+  - id: fm_b
+    name: Fund Manager B
+    roles: [fund_manager]
+  - id: im_kim
+    name: Investment Manager Kim
+    roles: [investment_manager]
+  - id: im_lee
+    name: Investment Manager Lee
+    roles: [investment_manager]
+  - id: contact_a
+    name: Company A Contact
+    roles: [company_contact]
+  - id: contact_b
+    name: Company B Contact
+    roles: [company_contact]

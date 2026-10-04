@@ -1,11 +1,63 @@
-# 시나리오의 시작 상태가 되는 샘플 레코드.
+# 시나리오의 시작 상태가 되는 샘플 레코드 (익명 예시 값).
 # scenarios/*.yaml 의 `record:` 가 여기의 id를 가리키고, 그 레코드의 status가 시작 상태입니다.
 # 다른 시작 상태가 필요하면 레코드를 추가하세요 (status는 world.yaml에 선언된 state여야 합니다).
 # 리뷰에서 강사가 이 레코드로 여러분의 시나리오를 실제 Runtime에서 실행합니다.
 records:
-  - type: Request
-    id: R-1001
+  - type: Fund
+    id: FUND-A
+    attributes:
+      name: Fund A
+      fund_manager: fm_a
+  - type: Fund
+    id: FUND-B
+    attributes:
+      name: Fund B
+      fund_manager: fm_b
+
+  - type: PortfolioCompany
+    id: CO-A
+    attributes:
+      name: Company A
+      investment_manager: im_kim
+      contact: contact_a
+  - type: PortfolioCompany
+    id: CO-B
+    attributes:
+      name: Company B
+      investment_manager: im_lee
+      contact: contact_b
+
+  # 두 펀드가 같은 기업(CO-A)에 투자 — CompanyReport는 기업 × 기간 단위로 한 번만 취합
+  - type: Investment
+    id: INV-A1
+    attributes:
+      fund: FUND-A
+      company: CO-A
+  - type: Investment
+    id: INV-B1
+    attributes:
+      fund: FUND-B
+      company: CO-A
+
+  - type: CompanyReport
+    id: CR-A-2026Q3
     status: draft
     attributes:
-      amount: 1200
-      requester: alex
+      company: CO-A
+      reporting_period: 2026Q3
+      submitted_company: CO-A
+      required_docs_complete: true
+      document_dates_valid: true
+      revision_reason: ""
+
+  # 공격 시나리오용 — 요청은 나갔고(requested) 아직 제출 전
+  - type: CompanyReport
+    id: CR-A-2026Q4
+    status: requested
+    attributes:
+      company: CO-A
+      reporting_period: 2026Q4
+      submitted_company: ""
+      required_docs_complete: false
+      document_dates_valid: false
+      revision_reason: ""

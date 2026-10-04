@@ -1,16 +1,52 @@
-# 정상 시나리오 (RUN) — 여러분의 World로 바꾸세요.
+# 정상 시나리오 (RUN) — CompanyReport 전체 흐름: 요청 → 제출 → 검토 시작 → 검증 완료
 # 형식과 desk-check 방법: scenarios/README.md
 # 판정은 예측(PREDICTION)입니다. 리뷰에서 강사가 실제 Runtime 결과와 비교합니다.
 scenario:
-  name: submit-happy-path
+  name: company-report-full-flow
   kind: happy-path
-  record: R-1001                  # seed.yaml의 레코드 — status: draft 가 시작 상태
+  record: CR-A-2026Q3             # seed.yaml — status: draft 가 시작 상태
   steps:
-    - input: "Submit request R-1001."
-      as: alex
+    - input: "Request the 2026Q3 status report from Company A and send the input link."
+      as: im_kim
+      transition: request_report
+      expect: ALLOW
+      because: >
+        State: CR-A-2026Q3 is draft = request_report.from.
+        Role: im_kim has investment_manager, which is in request_report.principal_role [fund_admin, investment_manager].
+        Guard C4_assigned_staff_only: "fund_admin" in principal.roles → false,
+        but principal.id (im_kim) == companyreport.company.investment_manager (CO-A → im_kim) → true.
+        Effect: send_input_link.
+
+    - input: "Company A's contact fills in the documents and submits."
+      as: contact_a
       transition: submit
       expect: ALLOW
       because: >
-        State: R-1001 is draft = submit.from.
-        Role: alex has employee = submit.principal_role.
-        Guard C1_requester_only: principal.id (alex) == request.requester (alex) → true.
+        State: requested (after step 1) = submit.from.
+        Role: contact_a has company_contact = submit.principal_role.
+        Guard C5_own_company_contact_only: principal.id (contact_a) ==
+        companyreport.company.contact (CO-A → contact_a) → true.
+
+    - input: "Fund admin starts reviewing the submitted report."
+      as: admin
+      transition: start_review
+      expect: ALLOW
+      because: >
+        State: submitted (after step 2) = start_review.from.
+        Role: admin has fund_admin, which is in start_review.principal_role.
+        Guard C4_assigned_staff_only: "fund_admin" in principal.roles → true.
+        (This relies on `in principal.roles` working at Runtime — an undocumented pattern;
+        if the review shows DENY here, this expression is the reason.)
+
+    - input: "Fund admin validates the report as the official record."
+      as: admin
+      transition: validate
+      expect: ALLOW
+      because: >
+        State: under_review (after step 3) = validate.from.
+        Role: admin has fund_admin, which is in validate.principal_role.
+        C1_required_docs_complete: required_docs_complete (true) == true → true.
+        C2_company_match: submitted_company (CO-A) == company (CO-A) → true.
+        C3_document_dates_valid: document_dates_valid (true) == true → true.
+        C4_assigned_staff_only: "fund_admin" in principal.roles → true (same caveat as step 3).
+        No global constraints. Result: validated (terminal).
